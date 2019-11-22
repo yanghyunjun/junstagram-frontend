@@ -5,6 +5,9 @@ const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
 `;
 
 const List = styled.ul`
@@ -13,18 +16,17 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   &:not(:last-child) {
-    margin-right: 25px;
+    margin-right: 16px;
   }
 `;
 
 const Link = styled.a`
-  text-transform: uppercase;
   color: ${props => props.theme.darkBlueColor};
-  font-size: 12px;
-  font-weight: 600;
 `;
 
-const Copyright = styled.span``;
+const Copyright = styled.span`
+  color: ${props => props.theme.darkGreyColor};
+`;
 
 export default () => (
   <Footer>
