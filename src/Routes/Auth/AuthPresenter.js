@@ -54,18 +54,18 @@ export default ({
   lastName,
   email,
   setAction,
-  onLogin
+  onSubmit
 }) => (
   <Wrapper>
     <Form>
       {action === "logIn" ? (
-        <form onSubmit={onLogin}>
+        <form onSubmit={onSubmit}>
           <Input placeholder={"email"} {...email} type="email" />
 
           <Button text={"Log in"} />
         </form>
       ) : (
-        <form onSubmit={onLogin}>
+        <form onSubmit={onSubmit}>
           <Input placeholder={"First name"} {...firstName} />
           <Input placeholder={"Last name"} {...lastName} />
           <Input placeholder={"email"} {...email} type="email" />
