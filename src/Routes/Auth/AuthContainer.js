@@ -24,11 +24,15 @@ export default () => {
     }
   });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (action === "logIn") {
       if (email.value !== "") {
-        requestSecret();
+        try {
+          await requestSecret();
+        } catch {
+          toast.error("Can't request secret, try again!");
+        }
       } else {
         toast.error("Email is required");
       }
