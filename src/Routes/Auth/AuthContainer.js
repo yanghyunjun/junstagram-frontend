@@ -28,18 +28,13 @@ export default () => {
     if (action === "logIn") {
       if (email.value !== "") {
         try {
-          const {
-            data: { requestSecret }
-          } = await requestSecretMutation();
-          console.log(requestSecret);
+          const { requestSecret } = await requestSecretMutation();
           if (!requestSecret) {
-            toast.error("You dont have an account yet, create one");
+            toast.error("You don't have an account yet, create one");
             setTimeout(() => setAction("signUp"), 3000);
-          } else {
-            toast.success("Check your inbox for your login secret");
           }
         } catch {
-          toast.error("Can't request secret, try again!");
+          toast.error("Can't request secret,try again");
         }
       } else {
         toast.error("Email is required");
@@ -59,8 +54,8 @@ export default () => {
             toast.success("Account created! Log In now");
             setTimeout(() => setAction("logIn"), 3000);
           }
-        } catch (e) {
-          toast.error(e.message);
+        } catch {
+          toast.error("Can't create account,try again");
         }
       } else {
         toast.error("All field are required");
