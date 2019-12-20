@@ -47,8 +47,9 @@ export default () => {
         lastName.value !== ""
       ) {
         try {
-          const { createAccount } = await createAccountMutation();
-          if (!createAccount) {
+          const { data } = await createAccountMutation();
+          console.log(data);
+          if (!data) {
             toast.error("Can't create account");
           } else {
             toast.success("Account created! Log In now");
