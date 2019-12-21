@@ -28,10 +28,14 @@ export default () => {
     if (action === "logIn") {
       if (email.value !== "") {
         try {
-          const { requestSecret } = await requestSecretMutation();
+          const {
+            data: { requestSecret }
+          } = await requestSecretMutation();
           if (!requestSecret) {
             toast.error("You don't have an account yet, create one");
             setTimeout(() => setAction("signUp"), 3000);
+          } else {
+            toast.success("Check your inbox for your login secret");
           }
         } catch {
           toast.error("Can't request secret,try again");
