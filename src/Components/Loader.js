@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { Keyframes, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { InstaLogo } from "./Icons";
 
 const Animation = keyframes`
