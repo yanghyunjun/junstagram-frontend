@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FatText from "../FatText";
 import Avatar from "../Avatar";
 import TextareaAutosize from "react-autosize-textarea";
-import { HeartFull, HeartEmpty, Comment } from "../Icons";
+import { HeartFull, HeartEmpty, Comment, Next, Prev } from "../Icons";
 
 const Post = styled.div`
   ${props => props.theme.whiteBox};
@@ -89,6 +89,21 @@ const Textarea = styled(TextareaAutosize)`
   }
 `;
 
+const NextPage = styled.div`
+  z-index: 2;
+  margin-top: 300px;
+  text-align: right;
+  position: relative;
+  margin-right: 15px;
+`;
+const PrevPage = styled.div`
+  z-index: 2;
+  position: absolute;
+  text-align: left;
+  margin-left: 15px;
+  margin-top: -25px;
+`;
+
 export default ({
   user: { username, avatar },
   location,
@@ -111,7 +126,18 @@ export default ({
     <Files>
       {files &&
         files.map((file, index) => (
-          <File key={file.id} src={file.url} showing={index === currentItem} />
+          <File key={file.id} src={file.url} showing={index === 0}>
+            <NextPage>
+              <Button>
+                <Next />
+              </Button>
+            </NextPage>
+            <PrevPage>
+              <Button>
+                <Prev />
+              </Button>
+            </PrevPage>
+          </File>
         ))}
     </Files>
     <Meta>
