@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FatText from "../FatText";
 import Avatar from "../Avatar";
 import TextareaAutosize from "react-autosize-textarea";
-import { HeartFull, HeartEmpty, Comment, Next, Prev } from "../Icons";
+import { HeartFull, HeartEmpty, CommentIcon, Next, Prev } from "../Icons";
 
 const Post = styled.div`
   ${props => props.theme.whiteBox};
@@ -91,17 +91,28 @@ const Textarea = styled(TextareaAutosize)`
 
 const NextPage = styled.div`
   z-index: 2;
-  margin-top: 300px;
-  text-align: right;
-  position: relative;
+  float: right;
   margin-right: 15px;
+  display: ${props => (props.hide ? "none" : "block")};
 `;
 const PrevPage = styled.div`
   z-index: 2;
-  position: absolute;
-  text-align: left;
+  float: left;
   margin-left: 15px;
-  margin-top: -25px;
+  display: ${props => (props.hide ? "none" : "block")};
+`;
+
+const PageWrapper = styled.div`
+  margin-top: 300px;
+`;
+const Comments = styled.ul`
+  margin-top: 10px;
+`;
+const Comment = styled.li`
+  margin-bottom: 7px;
+  span {
+    margin-right: 5px;
+  }
 `;
 
 export default ({
@@ -113,7 +124,12 @@ export default ({
   createdAt,
   newComment,
   currentItem,
-  toggleLike
+  toggleLike,
+  nextSlide,
+  prevSlide,
+  totalFiles,
+  onKeyPress,
+  comments
 }) => (
   <Post>
     <Header>
@@ -126,17 +142,22 @@ export default ({
     <Files>
       {files &&
         files.map((file, index) => (
-          <File key={file.id} src={file.url} showing={index === 0}>
-            <NextPage>
-              <Button>
-                <Next />
-              </Button>
-            </NextPage>
-            <PrevPage>
-              <Button>
-                <Prev />
-              </Button>
-            </PrevPage>
+          <File key={file.id} src={file.url} showing={index === currentItem}>
+            <PageWrapper>
+              <NextPage
+                onClick={nextSlide}
+                hide={totalFiles - 1 === currentItem}
+              >
+                <Button>
+                  <Next />
+                </Button>
+              </NextPage>
+              <PrevPage onClick={prevSlide} hide={currentItem === 0}>
+                <Button>
+                  <Prev />
+                </Button>
+              </PrevPage>
+            </PageWrapper>
           </File>
         ))}
     </Files>
@@ -146,12 +167,27 @@ export default ({
           {isLiked ? <HeartFull /> : <HeartEmpty />}
         </Button>
         <Button>
-          <Comment />
+          <CommentIcon />
         </Button>
       </Buttons>
       <FatText text={likeCount === 1 ? "1 like" : `${likeCount} likes`} />
+      {comments && (
+        <Comments>
+          {comments.map(comment => (
+            <Comment key={comment.id}>
+              <FatText text={comment.user.username} />
+              {comment.text}
+            </Comment>
+          ))}
+        </Comments>
+      )}
       <Timestamp>{createdAt}</Timestamp>
-      <Textarea placeholder={"Add a Comment ..."} {...newComment} />
+      <Textarea
+        placeholder={"댓글 달기..."}
+        value={newComment.value}
+        onChange={newComment.onChange}
+        onKeyUp={onKeyPress}
+      />
     </Meta>
   </Post>
 );

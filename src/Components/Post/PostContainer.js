@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import useInput from "../../Hooks/useInput";
 import PostPresenter from "./PostPresenter";
@@ -28,18 +28,21 @@ const PostContainer = ({
     variables: { postId: id, text: comment.value }
   });
 
-  const slide = () => {
-    const totalFiles = files.length;
-    if (currentItem === totalFiles - 1) {
-      setTimeout(() => setCurrentItem(0), 3000);
+  const totalFiles = files.length;
+  const nextSlide = () => {
+    if (totalFiles - 1 === currentItem) {
+      setCurrentItem(currentItem);
     } else {
-      setTimeout(() => setCurrentItem(currentItem + 1), 3000);
+      setCurrentItem(currentItem + 1);
     }
   };
-
-  useEffect(() => {
-    slide();
-  });
+  const prevSlide = () => {
+    if (currentItem === 0) {
+      setCurrentItem(0);
+    } else {
+      setCurrentItem(currentItem - 1);
+    }
+  };
 
   const toggleLike = () => {
     if (isLikedState === true) {
@@ -56,6 +59,15 @@ const PostContainer = ({
     }
   };
 
+  const onKeyPress = e => {
+    const { keyCode } = e;
+    if (keyCode === 13) {
+      comment.setValue("");
+      addCommentMutation();
+    }
+    return;
+  };
+
   return (
     <PostPresenter
       user={user}
@@ -70,7 +82,11 @@ const PostContainer = ({
       setIsLiked={setIsLiked}
       setLikeCount={setLikeCount}
       currentItem={currentItem}
+      nextSlide={nextSlide}
+      prevSlide={prevSlide}
+      totalFiles={totalFiles}
       toggleLike={toggleLike}
+      onKeyPress={onKeyPress}
     />
   );
 };
