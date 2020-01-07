@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
-import { gql } from "apollo-boost";
+import { MyProfile } from "../SharedQueries";
 import useInput from "../Hooks/useInput";
 import Input from "./Input";
 import { InstaLogo, Compass, HeartEmpty, PersonLogo } from "./Icons";
@@ -62,14 +62,6 @@ const HeaderLink = styled(Link)`
   }
 `;
 
-const MyProfile = gql`
-  {
-    myProfile {
-      username
-    }
-  }
-`;
-
 export default withRouter(({ history }) => {
   const search = useInput("");
   const { data } = useQuery(MyProfile);
@@ -101,7 +93,7 @@ export default withRouter(({ history }) => {
           <HeaderLink to="/explore">
             <Compass />
           </HeaderLink>
-          {!(data && data.myProfile) ? (
+          {!(data && data.MyProfile) ? (
             <HeaderLink to="/#">
               <PersonLogo />
             </HeaderLink>
