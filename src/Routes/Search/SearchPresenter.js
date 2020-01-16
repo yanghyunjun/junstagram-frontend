@@ -50,7 +50,7 @@ const SearchPresenter = ({ searchTerm, loading, data }) => {
                 key={user.id}
                 id={user.id}
                 url={user.avatar}
-                userName={user.userName}
+                username={user.username}
                 isFollowing={user.isFollowing}
                 isSelf={user.isSelf}
               />
@@ -63,7 +63,7 @@ const SearchPresenter = ({ searchTerm, loading, data }) => {
           ) : (
             data.searchPost.map(post => (
               <SquarePost
-                key={post}
+                key={post.id}
                 file={post.files[0]}
                 likeCount={post.likeCount}
                 commentCount={post.commentCount}

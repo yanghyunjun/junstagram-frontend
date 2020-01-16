@@ -87,13 +87,13 @@ export default withRouter(({ history }) => {
           </form>
         </HeaderColumn>
         <HeaderColumn>
-          <HeaderLink to="/notifications">
-            <HeartEmpty />
-          </HeaderLink>
           <HeaderLink to="/explore">
             <Compass />
           </HeaderLink>
-          {!(data && data.MyProfile) ? (
+          <HeaderLink to="/notifications">
+            <HeartEmpty />
+          </HeaderLink>
+          {!(data && data.myProfile) ? (
             <HeaderLink to="/#">
               <PersonLogo />
             </HeaderLink>
